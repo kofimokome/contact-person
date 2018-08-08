@@ -35,7 +35,7 @@ class Contact_Person {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Contact_Person_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Contact_Person_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,7 +44,7 @@ class Contact_Person {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -53,7 +53,7 @@ class Contact_Person {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -156,7 +156,9 @@ class Contact_Person {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		//
+		$this->loader->add_action( 'init', $plugin_admin, 'kmcp_custom_post_type' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'kmcp_save_information_meta', 10, 1 );
 	}
 
 	/**
