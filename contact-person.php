@@ -79,4 +79,5 @@ function run_contact_person() {
 	$plugin->run();
 
 }
+
 run_contact_person();

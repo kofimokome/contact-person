@@ -159,6 +159,7 @@ class Contact_Person {
 		//
 		$this->loader->add_action( 'init', $plugin_admin, 'kmcp_custom_post_type' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'kmcp_save_information_meta', 10, 1 );
+		$this->loader->add_shortcode( 'contact-person', $plugin_admin, 'kmcp_shortcode' );
 	}
 
 	/**
