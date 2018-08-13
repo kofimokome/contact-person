@@ -2,3 +2,48 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+#kmcp-search {
+    border: solid 1px lightgrey;
+}
+
+#kmcp-search, #kmcp-search-button {
+    padding: 5px 20px;
+    height: 40px;
+}
+
+#kmcp-search-button {
+    background-color: orange;
+    border: none;
+    color: white;
+    font-weight: bold;
+    margin-left: -4px;
+    cursor: pointer;
+}
+
+#kmcp-results-container {
+    margin-top: 20px;
+}
+
+.kmcp-result-title {
+    padding: 15px;
+    padding-left: 40px;
+    background-color: lightgrey;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+.kmcp-result-body {
+
+}
+
+.kmcp-result-information, .kmcp-result-pic {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.kmcp-result-information{
+    text-align: center;
+    margin-left: 150px;
+    line-height: 20px;
+}

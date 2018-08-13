@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              www.kofimokome.ml
+ * @link              i-mbu.com
  * @since             1.0.0
  * @package           Contact_Person
  *
  * @wordpress-plugin
  * Plugin Name:       Contact Person
- * Plugin URI:        http://zingersystems.com
+ * Plugin URI:        http://i-mbu.com/
  * Description:       Searches for available persons based on their ZIP Code
  * Version:           1.0.0
- * Author:            Kofi Mokome
- * Author URI:        www.kofimokome.ml
+ * Author:            iMbu On-Demand IT Solutions
+ * Author URI:        i-mbu.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       contact-person

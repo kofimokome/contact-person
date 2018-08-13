@@ -40,6 +40,8 @@ class Contact_Person_Admin {
 	 */
 	private $version;
 
+	// todo: contact-person' translate all countries to German
+
 	private $countries = array(
 		"Afghanistan",
 		"Albania",
@@ -241,6 +243,8 @@ class Contact_Person_Admin {
 		"Zimbabwe"
 	);
 
+	private $default_post = - 1;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -257,6 +261,11 @@ class Contact_Person_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
+		if ( get_option( "kmcp_default_post" ) == false ) {
+			add_option( "kmcp_default_post", - 1, null, "no" );
+		} else {
+			$this->default_post = (int) get_option( "kmcp_default_post" );
+		}
 	}
 
 	/**
@@ -264,8 +273,7 @@ class Contact_Person_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public
-	function enqueue_styles() {
+	public function enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -282,7 +290,6 @@ class Contact_Person_Admin {
 		global $post_type;
 		if ( $post_type == "kmcp-contact-person" ) {
 			wp_enqueue_style( "select2_css", plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( "tag-editor_css", plugin_dir_url( __FILE__ ) . 'css/jquery.tag-editor.css', array(), $this->version, 'all' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/contact-person-admin.css', array(), $this->version, 'all' );
 		}
 	}
@@ -292,8 +299,7 @@ class Contact_Person_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public
-	function enqueue_scripts() {
+	public function enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -306,12 +312,15 @@ class Contact_Person_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		global $post_type;
+		global $post_type, $post_id;
 		if ( $post_type == "kmcp-contact-person" ) {
 			wp_enqueue_script( "select2_js", plugin_dir_url( __FILE__ ) . 'js/select2.full.min.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( "tag-editor_js", plugin_dir_url( __FILE__ ) . 'js/jquery.tag-editor.min.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( "caret.js", plugin_dir_url( __FILE__ ) . 'js/jquery.caret.min.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/contact-person-admin.js', array( 'jquery' ), $this->version, true );
+			wp_localize_script( $this->plugin_name, 'my_data', array(
+				'default_post_id' => $this->default_post,
+				'this_post_id'    => $post_id,
+				"post_type"       => $post_type
+			) );
 		}
 	}
 
@@ -327,8 +336,8 @@ class Contact_Person_Admin {
 		$labels = array(
 			'name'           => 'Contact Person',
 			'singular_name'  => 'Contact Person',
-			'menu_name'      => 'Contact Person',
-			'name_admin_bar' => 'Contact Person',
+			'menu_name'      => __( 'Contact Person', 'contact-person' ),
+			'name_admin_bar' => __( 'Contact Person', 'contact-person' ),
 			'add_new_item'   => __( "Add Contact Person", "contact-person" ),
 			'edit_item'      => __( "Edit Contact Person", "contact-person" )
 		);
@@ -351,16 +360,16 @@ class Contact_Person_Admin {
 	function kmcp_meta_boxes() {
 		add_meta_box(
 			'kmcp-contact-person-information',
-			_( 'Contact Person Information' ),
+			__( 'Contact Person Information', 'contact-person' ),
 			array( $this, 'kmcp_information_metabox' ),
 			'kmcp-contact-person',
 			'advanced',
 			'default'
 		);
 		add_meta_box(
-			'kmcp-contact-person-country',
-			_( 'Contact Person Country' ),
-			array( $this, 'kmcp_country_metabox' ),
+			'kmcp-contact-person-default',
+			__( 'Default Contact', 'contact-person' ),
+			array( $this, 'kmcp_default_metabox' ),
 			'kmcp-contact-person',
 			'advanced',
 			'default'
@@ -369,31 +378,43 @@ class Contact_Person_Admin {
 
 	function kmcp_information_metabox() {
 		global $post_id;
+		$countries        = $this->countries;
+		$country_field_id = get_post_meta( $post_id, 'kmcp-country', true );
+		$index            = 1;
 		wp_nonce_field( basename( __FILE__ ), 'kmcp_information_nonce' );
 		?>
         <table>
 
             <tr>
                 <td>
-                    <label for="kmcp-office">Office:</label>
+                    <label for="kmcp-name"><?php _e( "Partner Name", "contact-person" ) ?>: </label>
                 </td>
                 <td>
-                    <input name="kmcp-office" type="text"
-                           value="<?php echo get_post_meta( $post_id, 'kmcp-office', true ) ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="kmcp-department">Department: </label>
-                </td>
-                <td>
-                    <input name="kmcp-department" type="text"
-                           value="<?php echo get_post_meta( $post_id, 'kmcp-department', true ) ?>">
+                    <input name="kmcp-name" type="text"
+                           value="<?php echo get_post_meta( $post_id, 'kmcp-name', true ) ?>">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="kmcp-tel">Tel:</label>
+                    <label for="kmcp-location"><?php _e( "Location", "contact-person" ) ?>:</label>
+                </td>
+                <td>
+                    <input name="kmcp-location" type="text"
+                           value="<?php echo get_post_meta( $post_id, 'kmcp-location', true ) ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="kmcp-address"><?php _e( "Address", "contact-person" ) ?>:</label>
+                </td>
+                <td>
+                    <input name="kmcp-address" type="text"
+                           value="<?php echo get_post_meta( $post_id, 'kmcp-address', true ) ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="kmcp-tel"><?php _e( "Telephone", "contact-person" ) ?>:</label>
                 </td>
                 <td>
                     <input name="kmcp-tel" type="text"
@@ -402,148 +423,83 @@ class Contact_Person_Admin {
             </tr>
             <tr>
                 <td>
-                    <label for="kmcp-fax">Fax:</label>
-                </td>
-                <td>
-                    <input name="kmcp-fax" type="text"
-                           value="<?php echo get_post_meta( $post_id, 'kmcp-fax', true ) ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="kmcp-email">Email: </label>
+                    <label for="kmcp-email"><?php _e( "Email", "contact-person" ) ?>: </label>
                 </td>
                 <td>
                     <input name="kmcp-email" type="email"
                            value="<?php echo get_post_meta( $post_id, 'kmcp-email', true ) ?>">
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <label for="kmcp-postcode-from"><?php _e( "Postcode from", "contact-person" ) ?>: </label>
+                </td>
+                <td>
+                    <input name="kmcp-postcode-from" type="number"
+                           value="<?php echo get_post_meta( $post_id, 'kmcp-postcode-from', true ) ?>" <?php echo ( $post_id == $this->default_post ) ? "readonly" : "" ?>>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="kmcp-postcode-to"><?php _e( "Postcode to", "contact-person" ) ?>: </label>
+                </td>
+                <td>
+                    <input name="kmcp-postcode-to" type="number"
+                           value="<?php echo get_post_meta( $post_id, 'kmcp-postcode-to', true ) ?>" <?php echo ( $post_id == $this->default_post ) ? "readonly" : "" ?>>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="kmcp-country"><?php _e( "Country", "contact-person" ) ?>:</label>
+                </td>
+                <td>
+                    <select name="kmcp-country" id="kmcp-country">
+                        <option value="0"> <?php _e( "Select a country", "contact-person" ) ?> ...</option>
+						<?php // todo: make select read only
+						foreach ( $countries as $country ): ?>
+							<?php if ( $country_field_id == '' ): ?>
+                                <option value="<?php echo $index ?>" <?php echo ( 68 == $index ) ? "selected" : "" ?>><?php _e( $country, "contact-person" ) ?></option>
+							<?php else: ?>
+                                <option value="<?php echo $index ?>" <?php echo ( $country_field_id == $index ) ? "selected" : "" ?>><?php echo $country ?></option>
+
+							<?php
+							endif;
+							$index ++;
+							?>
+						<?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
         </table>
 
 		<?php
 	}
 
-	function kmcp_country_metabox() {
-		$countries = $this->countries;
-		$scripts   = "<script> var countries = [];\n";
-		foreach ( $countries as $country ) {
-			$scripts .= "countries.push('" . $country . "');\n";
-		}
-		$scripts .= "console.log(countries);</script>";
-		echo $scripts;
-
+	function kmcp_default_metabox() {
 		global $post_id;
-		$index            = 1;
-		$country_field_id = 1;
-		$kmcp_city_zip    = get_post_meta( $post_id, 'kmcp-country-zip-data', true );
-		?>
 
-        <table id="kmcp-country-container">
-			<?php if ( $kmcp_city_zip == '' ): ?>
-                <tr>
-                    <td>
-                        <label for="kmcp-country-1">Country:</label>
-                    </td>
-                    <td>
-                        <select name="kmcp-country-1" id="kmcp-country-1">
-                            <option value="0"> Select a country ...</option>
-							<?php foreach ( $countries as $country ): ?>
-                                <option value="<?php echo $index ?>"><?php echo $country ?></option>
-								<?php $index ++; ?>
-							<?php endforeach; ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="kmcp-country-zip-1">ZIP Codes:</label>
-                    </td>
-                    <td>
-                        <input name="kmcp-country-zip-1" id="kmcp-country-zip-1" type="text"
-                               value="">
-                    </td>
-                </tr>
-				<?php
-				$country_field_id ++;
-			else:
-				$country_data = explode( ";", $kmcp_city_zip );
-				foreach ( $country_data as $country_datum ):
-					if ( $country_datum != '' ):
-						$class = 'class="kmcp-country-zip-' . $country_field_id . '-container"';
-						?>
-                        <tr <?php echo ( $country_field_id > 1 ) ? $class : "" ?>>
-                            <td>
-                                <label for="kmcp-country-<?php echo $country_field_id ?>">Country:</label>
-                            </td>
-                            <td>
-                                <select name="kmcp-country-<?php echo $country_field_id ?>"
-                                        id="kmcp-country-<?php echo $country_field_id ?>">
-                                    <option value="0"> Select a country ...</option>
-									<?php
-									$data = explode( ":", $country_datum );
-									foreach ( $countries as $country ): ?>
-                                        <option kofi="<?php echo $data[0]; ?>"
-                                                value="<?php echo $index ?>" <?php echo ( $data[0] == $index ) ? "selected" : "" ?>><?php echo $country ?></option>
-										<?php $index ++; ?>
-									<?php endforeach; ?>
-                                </select>
-                            </td>
-							<?php if ( $country_field_id > 1 ): ?>
-                                <td>
-                                    <button class="button button-link-delete"
-                                            id="kmcp-country-delete-<?php echo $country_field_id ?>">Delete
-                                    </button>
-                                </td>
-							<?php endif; ?>
-                        </tr>
-                        <tr <?php echo ( $country_field_id > 1 ) ? $class : "" ?>>
-                            <td>
-                                <label for="kmcp-country-zip-<?php echo $country_field_id ?>">ZIP Codes:</label>
-                            </td>
-                            <td>
-                                <input name="kmcp-country-zip-<?php echo $country_field_id ?>"
-                                       id="kmcp-country-zip-<?php echo $country_field_id ?>" type="text"
-                                       value="<?php echo $data[1] ?>">
-                                <br>
-                            </td>
-
-                        </tr>
-
-						<?php
-						$country_field_id ++;
-						$index = 1;
-					endif;
-				endforeach;
-			endif;
-			?>
-        </table>
-        <br><br>
-        <b id="kmcp-country-warning">Warning: Please select a country first and its zip codes</b><br>
-        <button class="button-primary" id="kmcp-add-country">+ Add Country</button>
-        <input name="kmcp-country-zip-data" id="kmcp-country-zip-data" type="hidden" style="width:100%;"
-               value="<?php echo get_post_meta( $post_id, 'kmcp-country-zip-data', true ) ?>" readonly>
-
+		_e( "Set this contact as default", "contact-person" ); ?>?: <input name="kmcp-set-default"
+                                                                           type="checkbox" <?php echo ( $this->default_post == $post_id ) ? "checked" : "" ?>>
+        <br> <br>
+        <b><?php _e( "Note", "contact-person" ) ?>:
+            <i> <?php _e( "This will make this contact appear on all searches", "contact-person" ) ?></i></b>
 		<?php
-		echo "<script>var id = " . $country_field_id . "</script>";
 	}
 
-	public
-	function kmcp_save_information_meta(
-		$post_id
-	) {
+	public function kmcp_save_information_meta( $post_id ) {
 		$is_valid_nonce = ( isset( $_POST['kmcp_information_nonce'] ) && wp_verify_nonce( $_POST['kmcp_information_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
 
 		// List of fields to update
 		$fields = array(
-			'kmcp-greeting',
-			'kmcp-fname',
-			'kmcp-lname',
-			'kmcp-office',
-			'kmcp-department',
+			'kmcp-location',
+			'kmcp-address',
 			'kmcp-tel',
-			'kmcp-fax',
 			'kmcp-email',
-			'kmcp-country-zip-data'
+			'kmcp-set-default',
+			'kmcp-postcode-from',
+			'kmcp-postcode-to',
+			'kmcp-name',
+			'kmcp-country'
 		);
 
 		if ( $is_valid_nonce ) {
@@ -552,17 +508,16 @@ class Contact_Person_Admin {
 					update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
 				}
 			}
+
+			if ( isset( $_POST["kmcp-set-default"] ) && $_POST["kmcp-set-default"] == "on" ) {
+				update_option( "kmcp_default_post", $post_id );
+
+			} else {
+				if ( $this->default_post == $post_id ) {
+					update_option( "kmcp_default_post", - 1 );
+				}
+			}
+
 		}
-
-	}
-
-	public function kmcp_shortcode() {
-		?>
-        <form action="">
-            <label for="kmcp-search">Enter ZIP: </label>
-            <input type="text" name="kmcp-search">
-            <button>Search</button>
-        </form>
-        <?php
 	}
 }

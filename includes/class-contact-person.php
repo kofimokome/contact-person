@@ -159,7 +159,6 @@ class Contact_Person {
 		//
 		$this->loader->add_action( 'init', $plugin_admin, 'kmcp_custom_post_type' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'kmcp_save_information_meta', 10, 1 );
-		$this->loader->add_shortcode( 'contact-person', $plugin_admin, 'kmcp_shortcode' );
 	}
 
 	/**
@@ -175,6 +174,11 @@ class Contact_Person {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		// Todo: add description
+		$this->loader->add_action( 'wp_ajax_kmcp_find_zip', $plugin_public, 'kmcp_find_zip' );
+		$this->loader->add_action( 'wp_ajax_nopriv_kmcp_find_zip', $plugin_public, 'kmcp_find_zip' );
+		$this->loader->add_shortcode( 'contact-person', $plugin_public, 'kmcp_shortcode' );
 
 	}
 

@@ -27,7 +27,7 @@ class Contact_Person_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,21 +36,26 @@ class Contact_Person_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
+
+	/*todo: make comment*/
+	private $default_post;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 *
+	 * @param      string $plugin_name The name of the plugin.
+	 * @param      string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->plugin_name  = $plugin_name;
+		$this->version      = $version;
+		$this->default_post = (int) get_option( "kmcp_default_post" );
 
 	}
 
@@ -97,7 +102,96 @@ class Contact_Person_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/contact-person-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->plugin_name, 'ajax_object', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' )
+		) );
 
 	}
 
+	public function kmcp_find_zip() {
+		global $wpdb;
+		$zip     = $_POST['zip'];
+		$results = array(
+			'status'  => 'fail',
+			'results' => array()
+		);
+		if ( $zip != '' ) {
+			$zip             = (int) $zip;
+			$args            = array(
+				'post_type'   => 'kmcp-contact-person',
+				'post_status' => 'publish',
+			);
+			$contact_persons = new WP_Query( $args );
+			while ( $contact_persons->have_posts() ) {
+				$contact_persons->the_post();
+				$tel           = get_post_meta( get_the_ID(), 'kmcp-tel', true );
+				$email         = get_post_meta( get_the_ID(), 'kmcp-email', true );
+				$location      = get_post_meta( get_the_ID(), 'kmcp-location', true );
+				$address       = get_post_meta( get_the_ID(), 'kmcp-address', true );
+				$postcode_from = get_post_meta( get_the_ID(), 'kmcp-postcode-from', true );
+				$postcode_to   = get_post_meta( get_the_ID(), 'kmcp-postcode-to', true );
+				$name          = get_post_meta( get_the_ID(), 'kmcp-name', true );
+				$country       = get_post_meta( get_the_ID(), 'kmcp-country', true );
+				$pic           = get_the_post_thumbnail( get_the_ID() );
+
+				if ( ( $zip >= (int) $postcode_from && $zip <= (int) $postcode_to && (int) $country == 68 ) || get_the_ID() == (int) $this->default_post ) {
+					$temp = array(
+						'name'          => $name,
+						'location'      => $location,
+						'address'       => $address,
+						'country'       => $country,
+						'postcode_from' => $postcode_from,
+						'postcode_to'   => $postcode_to,
+						'tel'           => $tel,
+						'email'         => $email
+					);
+					array_push( $results['results'], $temp );
+					$results['status'] = 'success';
+				}
+			}
+			echo json_encode( $results );
+			wp_reset_query();
+			wp_die();
+			//die();
+
+		} else {
+			echo json_encode( $results );
+			wp_die();
+		}
+	}
+
+	public function kmcp_shortcode() {
+		?>
+        <div id="kmcp-search-container">
+            <div class="kmcp-search">
+                <input type="number" name="kmcp-search" id="kmcp-search" placeholder="<?php _e("Enter Zip","contact-person");?>">
+                <button id="kmcp-search-button"><?php _e( "Search", "contact-person" ); ?></button>
+            </div>
+        </div>
+        <div id="kmcp-results-container">
+            <div class="kmcp-result-title">
+                title here
+            </div>
+            <div class="kmcp-result-body">
+                <div class="kmcp-result-information">
+                    <p><b>Some titlehere</b></p>
+                    <p>
+                        meibner strabe 191</p>
+                    <p>
+                        01323 redsds
+                    </p>
+                    <p>
+                        telefon : <a href="tel:8392839283">33u832832</a>
+                    </p>
+                    <p>
+                        email: <a href="mailto:kofi@jdks.cds">kofi@jksj.ckd</a>
+                    </p>
+                </div>
+                <div class="kmcp-result-pic">
+                    <img src="" alt="">
+                </div>
+            </div>
+        </div>
+		<?php
+	}
 }

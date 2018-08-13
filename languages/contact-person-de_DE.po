@@ -1,0 +1,96 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Custom Post Type
+msgid "Search"
+msgstr "Suche"
+
+msgid "Enter ZIP"
+msgstr "Postleitzahl eingeben"
+
+msgid "Add Contact Person"
+msgstr "Kontaktperson hinzufügen"
+
+msgid "Edit Contact Person"
+msgstr "Kontaktperson bearbeiten"
+
+msgid "Contact Person Information"
+msgstr "Informationen zum Ansprechpartner"
+
+msgid "Default Contact"
+msgstr "Standardkontakt"
+
+msgid "Partner Name"
+msgstr "Partnername"
+
+msgid "Contact Person"
+msgstr "Gesprächspartner"
+
+msgid "Location"
+msgstr "Ort"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Telephone"
+msgstr "Telefon"
+
+msgid "Email"
+msgstr "Email"
+
+#, fuzzy
+#| msgid "Post code from"
+msgid "Postcode from"
+msgstr "Postleitzahl von"
+
+#, fuzzy
+#| msgid "Post code to"
+msgid "Postcode to"
+msgstr "Postleitzahl zu"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Select a country"
+msgstr "Wähle ein Land"
+
+msgid "Set this contact as default"
+msgstr "Legen Sie diesen Kontakt als Standard fest"
+
+msgid "Note"
+msgstr "Hinweis"
+
+msgid "This will make this contact appear on all searches"
+msgstr "Dadurch wird dieser Kontakt bei allen Suchanfragen angezeigt"
+
+# Custom Post Type
+#~ msgid "Morning"
+#~ msgstr "hello"
+
+#, fuzzy
+#~| msgid "Welcome"
+#~ msgid "welcome"
+#~ msgstr "ha hah "
+
+#~ msgid "Welcome"
+#~ msgstr "ha hah "
+
+#~ msgid "john"
+#~ msgstr "Mary"
+
+#~ msgid "exam"
+#~ msgstr "examen"
+
+#~ msgid "kofi"
+#~ msgstr "cofee"

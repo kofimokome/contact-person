@@ -1,0 +1,58 @@
+# Custom Post Type
+
+msgid "Search"
+msgstr ""
+
+msgid "Enter ZIP"
+msgstr ""
+
+msgid "Add Contact Person"
+msgstr ""
+
+msgid "Edit Contact Person"
+msgstr ""
+
+msgid "Contact Person Information"
+msgstr ""
+
+msgid "Default Contact"
+msgstr ""
+
+msgid "Partner Name"
+msgstr ""
+
+msgid "Contact Person"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Telephone"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Postcode from"
+msgstr ""
+
+msgid "Postcode to"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Select a country"
+msgstr ""
+
+msgid "Set this contact as default"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "This will make this contact appear on all searches"
+msgstr ""
