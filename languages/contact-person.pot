@@ -3,7 +3,7 @@
 msgid "Search"
 msgstr ""
 
-msgid "Enter ZIP"
+msgid "Enter Zipcode"
 msgstr ""
 
 msgid "Add Contact Person"
@@ -55,4 +55,10 @@ msgid "Note"
 msgstr ""
 
 msgid "This will make this contact appear on all searches"
+msgstr ""
+
+msgid "Postcode search"
+msgstr ""
+
+msgid "Enter your postcode here and we will look for the right contact person"
 msgstr ""

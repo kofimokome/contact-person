@@ -3,7 +3,11 @@
  * included in this file.
  */
 
-#kmcp-country-warning{
+#kmcp-country-warning {
     display: none;
     color: red;
+}
+
+#kmcp-information-metabox-container input {
+    width: 100% !important;
 }

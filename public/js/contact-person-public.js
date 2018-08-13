@@ -34,7 +34,7 @@
 
         $("#kmcp-search-button").click(function (e) {
             e.preventDefault();
-            results.html("");
+            results.html(' <span class="fa fa-spinner fa-pulse fa-3x"></span>');
 
             var data = {
                 'action': 'kmcp_find_zip',
@@ -42,12 +42,10 @@
             };
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations
             $.post(ajax_object.ajax_url, data, function (response) {
-                //console.log(JSON.parse(response));
-                //console.log(response);
-
+                results.html("");
                 response = JSON.parse(response);
                 if (response.status === 'fail') {
-                    results.html("No Result found");
+                    results.html("No Result found / keine Ergebnisse gefunden");
                 } else {
                     for (var i = 0; i < response.results.length; i++) {
                         add_search_result(response.results[i]);
@@ -63,7 +61,8 @@
             var tel = result.tel;
             var email = result.email;
 
-            var content = '<div class="kmcp-result-title">' + name +
+            // todo: do the translation with php as pass as data in the respose
+            var content = '<div class="kmcp-result-title">' + address + ', ' + name +
                 '            </div>' +
                 '            <div class="kmcp-result-body">' +
                 '                <div class="kmcp-result-information">' +
@@ -72,14 +71,14 @@
                 '                    <p>' + address +
                 '                    </p>' +
                 '                    <p>' +
-                '                        telefon : <a href="tel:' + tel + '">' + tel + '</a>' +
+                '                        Telefon : <a href="tel:' + tel + '">' + tel + '</a>' +
                 '                    </p>' +
                 '                    <p>' +
-                '                        email: <a href="mailto:' + email + '">' + email + '</a>' +
+                '                        E-mail: <a href="mailto:' + email + '">' + email + '</a>' +
                 '                    </p>' +
                 '                </div>' +
                 '                <div class="kmcp-result-pic">' +
-                '                    <img src="" alt="">' +
+                '                    Picture here <img src="" alt="">' +
                 '                </div>' +
                 '            </div>';
 

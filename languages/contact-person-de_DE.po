@@ -16,14 +16,14 @@ msgstr ""
 msgid "Search"
 msgstr "Suche"
 
-msgid "Enter ZIP"
-msgstr "Postleitzahl eingeben"
+msgid "Enter Zipcode"
+msgstr "PLZ eingeben"
 
 msgid "Add Contact Person"
-msgstr "Kontaktperson hinzufügen"
+msgstr "Ansprechpartner hinzufügen"
 
 msgid "Edit Contact Person"
-msgstr "Kontaktperson bearbeiten"
+msgstr "Ansprechpartner bearbeiten"
 
 msgid "Contact Person Information"
 msgstr "Informationen zum Ansprechpartner"
@@ -32,10 +32,10 @@ msgid "Default Contact"
 msgstr "Standardkontakt"
 
 msgid "Partner Name"
-msgstr "Partnername"
+msgstr "Partner / Standort"
 
 msgid "Contact Person"
-msgstr "Gesprächspartner"
+msgstr "Ansprechpartner"
 
 msgid "Location"
 msgstr "Ort"
@@ -49,15 +49,11 @@ msgstr "Telefon"
 msgid "Email"
 msgstr "Email"
 
-#, fuzzy
-#| msgid "Post code from"
 msgid "Postcode from"
-msgstr "Postleitzahl von"
+msgstr "PLZ von"
 
-#, fuzzy
-#| msgid "Post code to"
 msgid "Postcode to"
-msgstr "Postleitzahl zu"
+msgstr "PLZ bis"
 
 msgid "Country"
 msgstr "Land"
@@ -73,6 +69,12 @@ msgstr "Hinweis"
 
 msgid "This will make this contact appear on all searches"
 msgstr "Dadurch wird dieser Kontakt bei allen Suchanfragen angezeigt"
+
+msgid "Postcode search"
+msgstr "Postleitzahlensuche"
+
+msgid "Enter your postcode here and we will look for the right contact person"
+msgstr "Geben Sie hier ihre Postleizahl ein und wir suchen ihnen den passenden Ansprechpartner"
 
 # Custom Post Type
 #~ msgid "Morning"

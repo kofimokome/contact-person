@@ -134,6 +134,13 @@ class Contact_Person_Public {
 				$country       = get_post_meta( get_the_ID(), 'kmcp-country', true );
 				$pic           = get_the_post_thumbnail( get_the_ID() );
 
+				/* Just in case it happens */
+				if ( (int) $postcode_from > (int) $postcode_to ) {
+					$temp_val      = $postcode_to;
+					$postcode_to   = $postcode_from;
+					$postcode_from = $temp_val;
+				}
+
 				if ( ( $zip >= (int) $postcode_from && $zip <= (int) $postcode_to && (int) $country == 68 ) || get_the_ID() == (int) $this->default_post ) {
 					$temp = array(
 						'name'          => $name,
@@ -163,13 +170,17 @@ class Contact_Person_Public {
 	public function kmcp_shortcode() {
 		?>
         <div id="kmcp-search-container">
+            <h1><b><?php _e( "Postcode search", "contact-person" ); ?></b></h1>
+			<?php _e( "Enter your postcode here and we will look for the right contact person", "contact-person" ); ?>
             <div class="kmcp-search">
-                <input type="number" name="kmcp-search" id="kmcp-search" placeholder="<?php _e("Enter Zip","contact-person");?>">
-                <button id="kmcp-search-button"><?php _e( "Search", "contact-person" ); ?></button>
+                <input type="number" name="kmcp-search" id="kmcp-search"
+                       placeholder="<?php _e( "Enter Zipcode", "contact-person" ); ?>">
+                <button id="kmcp-search-button"><span
+                            class="fas fa-sign-out-alt"> </span><?php _e( "Search", "contact-person" ); ?></button>
             </div>
         </div>
         <div id="kmcp-results-container">
-            <div class="kmcp-result-title">
+            <!--<div class="kmcp-result-title">
                 title here
             </div>
             <div class="kmcp-result-body">
@@ -190,7 +201,7 @@ class Contact_Person_Public {
                 <div class="kmcp-result-pic">
                     <img src="" alt="">
                 </div>
-            </div>
+            </div>-->
         </div>
 		<?php
 	}

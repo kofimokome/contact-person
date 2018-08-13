@@ -383,7 +383,7 @@ class Contact_Person_Admin {
 		$index            = 1;
 		wp_nonce_field( basename( __FILE__ ), 'kmcp_information_nonce' );
 		?>
-        <table>
+        <table id="kmcp-information-metabox-container">
 
             <tr>
                 <td>

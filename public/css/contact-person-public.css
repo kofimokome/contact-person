@@ -13,12 +13,16 @@
 }
 
 #kmcp-search-button {
-    background-color: orange;
+    background-color: #f8b000;
     border: none;
     color: white;
     font-weight: bold;
     margin-left: -4px;
     cursor: pointer;
+}
+
+#kmcp-search-button span{
+    margin-right: 5px;
 }
 
 #kmcp-results-container {
@@ -45,5 +49,11 @@
 .kmcp-result-information{
     text-align: center;
     margin-left: 150px;
-    line-height: 20px;
+    line-height: 10px;
+}
+
+@media (max-width: 576px) {
+    .kmcp-result-information{
+        margin-left: 10px;
+    }
 }
