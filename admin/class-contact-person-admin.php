@@ -253,8 +253,7 @@ class Contact_Person_Admin {
 	 * @param      string $plugin_name The name of this plugin.
 	 * @param      string $version The version of this plugin.
 	 */
-	public
-	function __construct(
+	public function __construct(
 		$plugin_name, $version
 	) {
 
@@ -331,11 +330,10 @@ class Contact_Person_Admin {
 	 */
 
 
-	public
-	function kmcp_custom_post_type() {
+	public function kmcp_custom_post_type() {
 		$labels = array(
-			'name'           => 'Contact Person',
-			'singular_name'  => 'Contact Person',
+			'name'           => __( 'Contact Person', 'contact-person' ),
+			'singular_name'  => __( 'Contact Person', 'contact-person' ),
 			'menu_name'      => __( 'Contact Person', 'contact-person' ),
 			'name_admin_bar' => __( 'Contact Person', 'contact-person' ),
 			'add_new_item'   => __( "Add Contact Person", "contact-person" ),

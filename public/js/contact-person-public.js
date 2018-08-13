@@ -31,6 +31,7 @@
 
     $(document).ready(function () {
         var results = $("#kmcp-results-container");
+        var tel_translate = ""; // dirty way of fixiing translation problem
 
         $("#kmcp-search-button").click(function (e) {
             e.preventDefault();
@@ -47,6 +48,7 @@
                 if (response.status === 'fail') {
                     results.html("No Result found / keine Ergebnisse gefunden");
                 } else {
+                    tel_translate = response.tel;
                     for (var i = 0; i < response.results.length; i++) {
                         add_search_result(response.results[i]);
                     }
@@ -70,15 +72,13 @@
                 '                    <p>' + location + '</p>' +
                 '                    <p>' + address +
                 '                    </p>' +
-                '                    <p>' +
-                '                        Telefon : <a href="tel:' + tel + '">' + tel + '</a>' +
+                '                    <p>' + tel_translate + ' : <a href="tel:' + tel + '">' + tel + '</a>' +
                 '                    </p>' +
                 '                    <p>' +
                 '                        E-mail: <a href="mailto:' + email + '">' + email + '</a>' +
                 '                    </p>' +
                 '                </div>' +
                 '                <div class="kmcp-result-pic">' +
-                '                    Picture here <img src="" alt="">' +
                 '                </div>' +
                 '            </div>';
 

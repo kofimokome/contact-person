@@ -3,7 +3,7 @@
 msgid "Search"
 msgstr ""
 
-msgid "Enter Zipcode"
+msgid "Enter postcode"
 msgstr ""
 
 msgid "Add Contact Person"

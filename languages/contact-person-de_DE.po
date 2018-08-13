@@ -16,7 +16,7 @@ msgstr ""
 msgid "Search"
 msgstr "Suche"
 
-msgid "Enter Zipcode"
+msgid "Enter postcode"
 msgstr "PLZ eingeben"
 
 msgid "Add Contact Person"
@@ -74,7 +74,9 @@ msgid "Postcode search"
 msgstr "Postleitzahlensuche"
 
 msgid "Enter your postcode here and we will look for the right contact person"
-msgstr "Geben Sie hier ihre Postleizahl ein und wir suchen ihnen den passenden Ansprechpartner"
+msgstr ""
+"Geben Sie hier lhre Postleitzahl ein und wir suchen lhnen den passenden "
+"Ansprechpartner"
 
 # Custom Post Type
 #~ msgid "Morning"

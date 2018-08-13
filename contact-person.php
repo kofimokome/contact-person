@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Contact Person
  * Plugin URI:        http://i-mbu.com/
- * Description:       Searches for available persons based on their ZIP Code
+ * Description:       Searches for available persons based on their post Code
  * Version:           1.0.0
  * Author:            iMbu On-Demand IT Solutions
  * Author URI:        i-mbu.com

@@ -113,7 +113,8 @@ class Contact_Person_Public {
 		$zip     = $_POST['zip'];
 		$results = array(
 			'status'  => 'fail',
-			'results' => array()
+			'results' => array(),
+			'tel'     => __( 'Telephone', 'contact-person' ) //dirty way of fixing translation problem
 		);
 		if ( $zip != '' ) {
 			$zip             = (int) $zip;
@@ -172,9 +173,9 @@ class Contact_Person_Public {
         <div id="kmcp-search-container">
             <h1><b><?php _e( "Postcode search", "contact-person" ); ?></b></h1>
 			<?php _e( "Enter your postcode here and we will look for the right contact person", "contact-person" ); ?>
-            <div class="kmcp-search">
+            <div class="kmcp-search" style="margin-top: 10px">
                 <input type="number" name="kmcp-search" id="kmcp-search"
-                       placeholder="<?php _e( "Enter Zipcode", "contact-person" ); ?>">
+                       placeholder="<?php _e( "Enter postcode", "contact-person" ); ?>">
                 <button id="kmcp-search-button"><span
                             class="fas fa-sign-out-alt"> </span><?php _e( "Search", "contact-person" ); ?></button>
             </div>
