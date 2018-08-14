@@ -63,7 +63,7 @@
             var tel = result.tel;
             var email = result.email;
 
-            // todo: do the translation with php as pass as data in the respose
+            // todo: do the translation with php and pass the data in the respose
             var content = '<div class="kmcp-result-title">' + address + ', ' + name +
                 '            </div>' +
                 '            <div class="kmcp-result-body">' +

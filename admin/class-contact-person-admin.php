@@ -451,7 +451,7 @@ class Contact_Person_Admin {
                     <label for="kmcp-country"><?php _e( "Country", "contact-person" ) ?>:</label>
                 </td>
                 <td>
-                    <select name="kmcp-country" id="kmcp-country">
+                    <select name="kmcp-country" id="kmcp-country" disabled>
                         <option value="0"> <?php _e( "Select a country", "contact-person" ) ?> ...</option>
 						<?php // todo: make select read only
 						foreach ( $countries as $country ): ?>
@@ -506,6 +506,8 @@ class Contact_Person_Admin {
 					update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
 				}
 			}
+
+			update_post_meta( $post_id, 'kmcp-country', 68 ); // todo: To be removed when making plugin available for other countries
 
 			if ( isset( $_POST["kmcp-set-default"] ) && $_POST["kmcp-set-default"] == "on" ) {
 				update_option( "kmcp_default_post", $post_id );

@@ -41,7 +41,7 @@ msgid "Location"
 msgstr "Ort"
 
 msgid "Address"
-msgstr "Adresse"
+msgstr "Straße"
 
 msgid "Telephone"
 msgstr "Telefon"

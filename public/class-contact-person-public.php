@@ -40,7 +40,9 @@ class Contact_Person_Public {
 	 */
 	private $version;
 
-	/*todo: make comment*/
+	/**
+     * The ID of the default contact person
+	*/
 	private $default_post;
 
 	/**
@@ -117,7 +119,31 @@ class Contact_Person_Public {
 			'tel'     => __( 'Telephone', 'contact-person' ) //dirty way of fixing translation problem
 		);
 		if ( $zip != '' ) {
-			$zip             = (int) $zip;
+			$zip = (int) $zip;
+
+			/* Lets add the default contact to the beginning of the search*/
+			$tel           = get_post_meta( $this->default_post, 'kmcp-tel', true );
+			$email         = get_post_meta( $this->default_post, 'kmcp-email', true );
+			$location      = get_post_meta( $this->default_post, 'kmcp-location', true );
+			$address       = get_post_meta( $this->default_post, 'kmcp-address', true );
+			$postcode_from = get_post_meta( $this->default_post, 'kmcp-postcode-from', true );
+			$postcode_to   = get_post_meta( $this->default_post, 'kmcp-postcode-to', true );
+			$name          = get_post_meta( $this->default_post, 'kmcp-name', true );
+			$country       = get_post_meta( $this->default_post, 'kmcp-country', true );
+			$temp          = array(
+				'name'          => $name,
+				'location'      => $location,
+				'address'       => $address,
+				'country'       => $country,
+				'postcode_from' => $postcode_from,
+				'postcode_to'   => $postcode_to,
+				'tel'           => $tel,
+				'email'         => $email
+			);
+			array_push( $results['results'], $temp );
+			$results['status'] = 'success';
+
+			/* Adding the other results if any */
 			$args            = array(
 				'post_type'   => 'kmcp-contact-person',
 				'post_status' => 'publish',
@@ -133,7 +159,7 @@ class Contact_Person_Public {
 				$postcode_to   = get_post_meta( get_the_ID(), 'kmcp-postcode-to', true );
 				$name          = get_post_meta( get_the_ID(), 'kmcp-name', true );
 				$country       = get_post_meta( get_the_ID(), 'kmcp-country', true );
-				$pic           = get_the_post_thumbnail( get_the_ID() );
+				// $pic           = get_the_post_thumbnail( get_the_ID() );
 
 				/* Just in case it happens */
 				if ( (int) $postcode_from > (int) $postcode_to ) {
@@ -142,7 +168,7 @@ class Contact_Person_Public {
 					$postcode_from = $temp_val;
 				}
 
-				if ( ( $zip >= (int) $postcode_from && $zip <= (int) $postcode_to && (int) $country == 68 ) || get_the_ID() == (int) $this->default_post ) {
+				if ( $zip >= (int) $postcode_from && $zip <= (int) $postcode_to && (int) $country == 68 && get_the_ID() != (int) $this->default_post ) {
 					$temp = array(
 						'name'          => $name,
 						'location'      => $location,
@@ -154,7 +180,6 @@ class Contact_Person_Public {
 						'email'         => $email
 					);
 					array_push( $results['results'], $temp );
-					$results['status'] = 'success';
 				}
 			}
 			echo json_encode( $results );
