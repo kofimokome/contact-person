@@ -348,7 +348,7 @@ class Contact_Person_Admin {
 			'hierarchical'         => false,
 			'menu_position'        => 25,
 			'menu_icon'            => 'dashicons-admin-site',
-			'supports'             => array( 'title', 'thumbnail' ),
+			'supports'             => array( 'title' ),
 			'register_meta_box_cb' => array( $this, 'kmcp_meta_boxes' )
 		);
 
@@ -369,7 +369,7 @@ class Contact_Person_Admin {
 			__( 'Default Contact', 'contact-person' ),
 			array( $this, 'kmcp_default_metabox' ),
 			'kmcp-contact-person',
-			'advanced',
+			'side',
 			'default'
 		);
 	}

@@ -32,13 +32,13 @@
 .kmcp-result-title {
     padding: 15px;
     padding-left: 40px;
-    background-color: lightgrey;
+    background-color: rgb(219, 219, 219);
     font-weight: bold;
     margin-top: 40px;
 }
 
 .kmcp-result-body {
-
+    background: #fafafa;
 }
 
 .kmcp-result-information, .kmcp-result-pic {
