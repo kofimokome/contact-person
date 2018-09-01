@@ -67,8 +67,8 @@ class Contact_Person {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'KMCP_PLUGIN_NAME_VERSION' ) ) {
+			$this->version = KMCP_PLUGIN_NAME_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}

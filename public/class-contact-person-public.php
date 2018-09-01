@@ -41,8 +41,8 @@ class Contact_Person_Public {
 	private $version;
 
 	/**
-     * The ID of the default contact person
-	*/
+	 * The ID of the default contact person
+	 */
 	private $default_post;
 
 	/**
@@ -147,6 +147,7 @@ class Contact_Person_Public {
 			$args            = array(
 				'post_type'   => 'kmcp-contact-person',
 				'post_status' => 'publish',
+                'posts_per_page'=> -1
 			);
 			$contact_persons = new WP_Query( $args );
 			while ( $contact_persons->have_posts() ) {
@@ -168,7 +169,7 @@ class Contact_Person_Public {
 					$postcode_from = $temp_val;
 				}
 
-				if ( $zip >= (int) $postcode_from && $zip <= (int) $postcode_to && (int) $country == 68 && get_the_ID() != (int) $this->default_post ) {
+				if ( $zip >= (int) $postcode_from && $zip <= (int) $postcode_to && ( get_the_ID() != $this->default_post ) ) { //country 68
 					$temp = array(
 						'name'          => $name,
 						'location'      => $location,
